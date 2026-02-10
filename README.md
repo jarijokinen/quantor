@@ -54,7 +54,7 @@ Check the data file (and print some info like bar count):
 Create your own study inside the `research` directory:
 
 ```c
-# ./research/rsi-on-bull-trend-start.c
+// ./research/rsi-on-bull-trend-start.c
 
 #include "research.h"
 
