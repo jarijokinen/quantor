@@ -6,5 +6,6 @@
 int last_day_of_month(int year, int month);
 int64_t days_from_civil(int y, unsigned m, unsigned d);
 int64_t parse_ts_utc_ns(const char *s);
+int64_t date_to_utc_ns(const char *s);
 
 #endif

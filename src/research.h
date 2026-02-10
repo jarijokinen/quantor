@@ -5,6 +5,8 @@
 
 typedef struct Quantor {
   const char *symbol;
+  const char *start_date;
+  const char *end_date;
   uint64_t file_count;
   uint64_t bar_count;
 } Quantor;

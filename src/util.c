@@ -46,3 +46,12 @@ int64_t parse_ts_utc_ns(const char *s)
   int64_t utc_sec = local_sec - offset;
   return utc_sec * 1000000000LL;
 }
+
+int64_t date_to_utc_ns(const char *s)
+{
+  int y, m, d;
+  sscanf(s, "%d-%d-%d", &y, &m, &d);
+
+  int64_t days = days_from_civil(y, (unsigned)m, (unsigned)d);
+  return days * 86400LL * 1000000000LL;
+}

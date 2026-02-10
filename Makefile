@@ -14,14 +14,11 @@ BIN_DIR := bin
 BUILD_DIR := build
 SRC_DIR := src
 
-CLI_OBJS := \
-	$(BUILD_DIR)/cli.o \
-	$(BUILD_DIR)/http.o \
-	$(BUILD_DIR)/store.o \
-	$(BUILD_DIR)/store_import.o \
-	$(BUILD_DIR)/store_io.o \
-	$(BUILD_DIR)/store_mmap.o \
-	$(BUILD_DIR)/util.o
+CORE_SRCS := $(filter-out $(SRC_DIR)/cli.c $(SRC_DIR)/research.c,$(wildcard $(SRC_DIR)/*.c))
+CORE_OBJS := $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(CORE_SRCS))
+
+CLI_OBJS := $(BUILD_DIR)/cli.o
+RESEARCH_OBJS := $(BUILD_DIR)/research.o
 
 RESEARCH_SRCS := $(wildcard $(RESEARCH_DIR)/*.c)
 RESEARCH_BINS := $(patsubst $(RESEARCH_DIR)/%.c,$(BIN_DIR)/%,$(RESEARCH_SRCS))
@@ -35,17 +32,17 @@ $(BIN_DIR):
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(TARGET): $(CLI_OBJS)
-	$(CC) $(CLI_OBJS) $(CFLAGS) $(LDLIBS) -o $@
+$(TARGET): $(CLI_OBJS) $(CORE_OBJS)
+	$(CC) $(CLI_OBJS) $(CORE_OBJS) $(CFLAGS) $(LDLIBS) -o $@
 
-$(BIN_DIR)/%: $(RESEARCH_DIR)/%.c $(SRC_DIR)/research.c | $(BIN_DIR)
-	$(CC) $(CFLAGS) -I$(SRC_DIR) $^ $(LDLIBS) -o $@
+$(BIN_DIR)/%: $(RESEARCH_DIR)/%.c $(CORE_OBJS) $(RESEARCH_OBJS) | $(BIN_DIR)
+	$(CC) $(CFLAGS) -I$(SRC_DIR) $< $(CORE_OBJS) $(RESEARCH_OBJS) $(LDLIBS) -o $@
 
 cli: $(TARGET)
 research: $(RESEARCH_BINS)
 all: cli research
 
 clean:
-	$(RM) $(CLI_OBJS) $(TARGET) $(RESEARCH_BINS)
+	$(RM) $(CLI_OBJS) $(CORE_OBJS) $(TARGET) $(RESEARCH_BINS)
 
 .PHONY: all cli research clean
