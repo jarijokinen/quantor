@@ -54,7 +54,7 @@ Check the data file (and print some info like bar count):
 Create your own study inside the `research` directory:
 
 ```c
-// ./research/rsi-on-bull-trend-start.c
+// research/rsi_on_spy_bull_trend_start.c
 
 #include "research.h"
 
@@ -79,7 +79,23 @@ Compile and run the study:
 
 ```bash
 make research
-./bin/rsi-on-bull-trend-start
+./bin/rsi_on_spy_bull_trend_start
+```
+```
+Probability study: RSI(14) when SPY close crosses above SMA(200)
+Samples: 3014
+Mean RSI at bull-start: 55.51
+Most probable RSI bin: [50.0, 60.0)  count=1134
+RSI [0.0, 10.0): 0.00% (0)
+RSI [10.0, 20.0): 0.00% (0)
+RSI [20.0, 30.0): 0.23% (7)
+RSI [30.0, 40.0): 5.47% (165)
+RSI [40.0, 50.0): 24.12% (727)
+RSI [50.0, 60.0): 37.62% (1134)
+RSI [60.0, 70.0): 25.38% (765)
+RSI [70.0, 80.0): 6.37% (192)
+RSI [80.0, 90.0): 0.63% (19)
+RSI [90.0, 100.0): 0.17% (5)
 ```
 
 ## License

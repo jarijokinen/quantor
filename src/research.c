@@ -98,11 +98,8 @@ int main(int argc, char **argv)
   Quantor q;
   memset(&q, 0, sizeof(q));
 
-  log_msg(&q, "Running on_init() hook...");
   on_init(&q);
-  log_msg(&q, "Processing bars...");
   process_symbol(&q);
-  log_msg(&q, "Running on_done() hook...");
   on_done(&q);
 
   exit(EXIT_SUCCESS);
