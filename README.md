@@ -7,6 +7,7 @@ Written in pure C and optimized for speed.
 
 * Import historical intraday data (1-min bars) from Tiingo API
 * Store data in binary format and mmap it into memory for maximum performance
+* Research functionality to create studies based on historical data
 
 ## Installation
 
@@ -46,6 +47,39 @@ Check the data file (and print some info like bar count):
 
 ```bash
 ./quantor check AAPL
+```
+
+## Research
+
+Create your own study inside the `research` directory:
+
+```c
+# ./research/rsi-on-bull-trend-start.c
+
+#include "research.h"
+
+void on_init(Quantor *q)
+{
+  // Initialize your study
+}
+
+void on_bar(Quantor *q, const char *symbol, const Bar *bar)
+{
+  // Process bar data
+}
+
+void on_done(Quantor *q)
+{
+  // Print results
+}
+```
+
+Compile and run the study:
+
+
+```bash
+make research
+./bin/rsi-on-bull-trend-start
 ```
 
 ## License
